@@ -1,5 +1,5 @@
 # mcmc-decipher
-Use MCMC to generate a decipher key, given some encrypted text (either user input or provided text).
+Use Markov Chain Monte Carlo (MCMC) sampling to generate a cipher key that best deciphers some encoded text. Encoded text can either be user input or preselected text prompts.
 
 Currently working with substiution cipher for the encryption and Metroplis-Hastings for MCMC. 
 
@@ -13,3 +13,9 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 
 ## Cherry on top:
     Create a front end
+    
+## Installation
+TODO
+
+## Running the program
+TODO
