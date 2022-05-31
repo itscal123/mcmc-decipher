@@ -27,7 +27,7 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
 
         # Calculate the acceptance probability (ratio between the current
         # score and proposed score)
-        accept_ratio = min(1, math.exp(new_score - curr_score))
+        accept_ratio = min(1, np.exp(new_score - curr_score))
 
         # Sample randomly from [0,1]
         randnum = np.random.uniform()
