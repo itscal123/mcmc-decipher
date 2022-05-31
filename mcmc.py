@@ -27,13 +27,13 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
 
         # Calculate the acceptance probability (ratio between the current
         # score and proposed score)
-        threshold = min(1, math.exp(new_score - curr_score))
+        accept_ratio = min(1, math.exp(new_score - curr_score))
 
         # Sample randomly from [0,1]
-        accept = np.random.uniform()
+        randnum = np.random.uniform()
 
         # Boolean flag denoting if we should accept the proposal
-        acceptProposal = False if accept > threshold else True
+        acceptProposal = False if randnum > accept_ratio else True
 
         # Use new decryption cipher if we accept proposal
         if acceptProposal:
