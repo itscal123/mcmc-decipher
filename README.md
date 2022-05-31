@@ -18,4 +18,4 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 TODO
 
 ## Running the program
-TODO
+After succesfully installing the project and all relevant packages, simply run main.py.
