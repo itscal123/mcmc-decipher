@@ -159,7 +159,6 @@ def proposeKey(key):
     return proposal
 
 
-
 def generateEncryptionCipher():
     """
     Generate a random substitution cipher
@@ -179,3 +178,34 @@ def generateEncryptionCipher():
         cipher += char
 
     return cipher
+
+
+def testCipher(encrypt_key, alphabet, decrypt_key):
+    """
+    Test function that evaluates the quality of the decryption cipher. Based on the number of correct letter assignments
+    --------
+    params:
+        encrypt_key (str): String representation of the encryption cipher used
+        
+        alphabet (str): String representation of the English alphabet
+                        (uppercase)
+
+        decrypt_key (str): String representation of the decryption cipher 
+                           generated during MCMC
+    returns:
+        (str, int, float): The decrypted alphabet and number 
+                           percentage of correct letters
+    """
+    # Apply encode then decode the English alphabet
+    test = applyKey(encrypt_key, alphabet)
+    guess = applyKey(decrypt_key, test)
+    correct, total = 0, 0
+
+    # Count correct letters
+    for i in range(len(alphabet)):
+        if alphabet[i] == guess[i]:
+            correct += 1
+        total += 1
+    
+    # Return the total number of correct and percentage (as a tuple)
+    return guess, correct, correct/total
