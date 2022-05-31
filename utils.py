@@ -85,9 +85,6 @@ def score(key, text, freq_dict):
     alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
                 'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
-    # Gets the current mapping
-    mapping = mapKey(key)
-
     # Decode the given text
     decoded = applyKey(key, text)
 
@@ -181,30 +178,29 @@ def generateEncryptionCipher():
     return cipher
 
 
-def testCipher(encrypt_key, alphabet, decrypt_key):
+def testCipher(encrypt_key, base, decrypt_key):
     """
     Test function that evaluates the quality of the decryption cipher. Based on the number of correct letter assignments
     --------
     params:
         encrypt_key (str): String representation of the encryption cipher used
         
-        alphabet (str): String representation of the English alphabet
-                        (uppercase)
+        base (str): String representation of what we are trying to decipher
 
         decrypt_key (str): String representation of the decryption cipher 
                            generated during MCMC
     returns:
-        (str, int, float): The decrypted alphabet and number 
+        (str, int, float): The decrypted base text and number 
                            percentage of correct letters
     """
-    # Apply encode then decode the English alphabet
-    test = applyKey(encrypt_key, alphabet)
+    # Apply encode then decode the base text
+    test = applyKey(encrypt_key, base)
     guess = applyKey(decrypt_key, test)
     correct, total = 0, 0
 
     # Count correct letters
-    for i in range(len(alphabet)):
-        if alphabet[i] == guess[i]:
+    for i in range(len(base)):
+        if base[i] == guess[i]:
             correct += 1
         total += 1
     

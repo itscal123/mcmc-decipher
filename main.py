@@ -1,4 +1,4 @@
-import mcmc
+from mcmc import mcmc
 import utils
 import numpy as np
 
@@ -27,11 +27,13 @@ decrypt_list = list(np.random.choice(chars, size=26, replace=False))
 decrypt_key = "".join(decrypt_list)
 
 # Run MCMC
-# TODO
+decrypt_key = mcmc(decrypt_key, encoded_text)
 
 # Print decrypted text after MCMC
 decoded_text = utils.applyKey(decrypt_key, encoded_text)
-print(f'Decrypted text:\n{decoded_text}\n')
+print('----------------------')
+print(f'Original text:\n{user_input}\n')
+print(f'Final decrypted text:\n{decoded_text}\n')
 
 # Calculate the number of correct letters
 guess, count, percent = utils.testCipher(encrypt_key, alphabet, decrypt_key)
