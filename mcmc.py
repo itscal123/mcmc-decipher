@@ -48,3 +48,17 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     
     # Return the final decryption cipher
     return decrypt_key
+
+
+"""
+Useful links:
+HMC
+https://pythonhosted.org/pyhmc/
+
+https://towardsdatascience.com/python-hamiltonian-monte-carlo-from-scratch-955dba96a42d
+
+https://colindcarroll.com/2019/04/11/hamiltonian-monte-carlo-from-scratch/
+----------------------------------------
+Metropolis Hastings
+https://jfking50.github.io/decipher/
+"""
