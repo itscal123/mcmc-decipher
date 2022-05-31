@@ -50,6 +50,23 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     return decrypt_key
 
 
+def leapfrog(q, p, dVdq, path_len, step_size):
+    """
+    Helper function for Hamiltonian Monte Carlo that uses leapfrog integration to numerically integrate
+    differential equations
+    ----------
+    params:
+        q (np.float64): initial position
+        p (np.float64): initial momentum
+        dVdq (callable): gradient of the velocity
+        path_len (float): how long to integrate for
+        step_size (float): how long each integration step should be
+
+    returns:
+        q, p (np.float64, np.float64): updated position and momentum
+    """
+    # TODO
+
 """
 Useful links:
 HMC
