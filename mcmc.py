@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 
-def mcmc(decrypt_key, encoded_text, iters=10000):
+def mcmc(decrypt_key, encoded_text, iters=100000):
     """
     Function that uses the Metroplis-Hastings algorithm for our Markov Chain 
     Monte Carlo implementation.
@@ -15,6 +15,7 @@ def mcmc(decrypt_key, encoded_text, iters=10000):
     # Get the character frequencies
     freqDict = utils.loadFreqDict()
 
+    print('Running Markov Chain Monte Carlo')
     # Run the MCMC for the passed number of iterations
     for i in range(iters):
         # Make proposal
@@ -39,5 +40,11 @@ def mcmc(decrypt_key, encoded_text, iters=10000):
             decrypt_key = proposal
 
         # Print every 500th iteration
-        if i % 500 == 0:
-            print(f'Iteration: {i+1}')
+        if (i+1) == 1 or (i+1) % 500 == 0:
+            decode = utils.applyKey(decrypt_key, encoded_text)
+            score = utils.score(decrypt_key, encoded_text, freqDict)
+            print(f'Iteration {i+1:>5} -> Score: {score:.2f}\n')
+            print(f'Decrypted text:\n{decode}\n')
+    
+    # Return the final decryption cipher
+    return decrypt_key
