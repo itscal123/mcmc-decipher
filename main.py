@@ -2,6 +2,9 @@ from mcmc import mcmc
 import utils
 import numpy as np
 
+# Set random seed (using new preferred practice)
+rng = np.random.default_rng(0)
+
 # English alphabet
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -21,7 +24,7 @@ chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
          'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 # Generate a random encryption cipher
-encrypt_key = utils.generateEncryptionCipher()
+encrypt_key = utils.generateEncryptionCipher(rng)
 
 # Prompt user if they want to use the predefined text or put in their own input
 prompt = input('Would you like to use predefined text? [Y/N]\n')
@@ -41,11 +44,11 @@ print(f'\nUnencrypted text: \n{user_input}\n')
 print(f'Encrypted text:\n{encoded_text}\n')
 
 # Generate a random decryption key
-decrypt_list = list(np.random.choice(chars, size=26, replace=False))
+decrypt_list = list(rng.choice(chars, size=26, replace=False))
 decrypt_key = "".join(decrypt_list)
 
 # Run MCMC
-decrypt_key = mcmc(decrypt_key, encoded_text)
+decrypt_key = mcmc(decrypt_key, encoded_text, rng)
 
 # Print decrypted text after MCMC
 decoded_text = utils.applyKey(decrypt_key, encoded_text)

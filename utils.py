@@ -123,17 +123,23 @@ def score(key, text, freq_dict):
     return score
 
 
-def proposeKey(key):
+def proposeKey(key, rng):
     """
     Takes a decryption cipher, and generates a new proposal to it.
     Currently working with substitutions (may change later)
+    -------------
+    params:
+        key (str): String representation of a cipher
+        rng (generator): Seeded random number generator
+    returns:
+        proposal (str): new proposed cipher
     """
     proposal = ''
     chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
                'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
     # Randomly swap two characters
-    char1, char2 = np.random.choice(chars, size=2, replace=False)
+    char1, char2 = rng.choice(chars, size=2, replace=False)
 
     # Create the new proposal
     new_key = list(key)
@@ -156,12 +162,12 @@ def proposeKey(key):
     return proposal
 
 
-def generateEncryptionCipher():
+def generateEncryptionCipher(rng):
     """
     Generate a random substitution cipher
     --------
     params:
-        None
+        rng (generator): Seeded random number generator
     returns:
         cipher (str): An encryption cipher
     """
@@ -169,7 +175,7 @@ def generateEncryptionCipher():
                 'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
     cipher = ''
-    encryption = list(np.random.choice(alphabet, size=26, replace=False))
+    encryption = list(rng.choice(alphabet, size=26, replace=False))
 
     for char in encryption:
         cipher += char

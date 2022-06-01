@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 
-def mcmc(decrypt_key, encoded_text, iters=100000):
+def mcmc(decrypt_key, encoded_text, rng, iters=100000):
     """
     Function that uses the Metroplis-Hastings algorithm for our Markov Chain 
     Monte Carlo implementation.
@@ -15,7 +15,10 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     params:
         decrypt_key (str): String representation of the decryption cipher
         encoded_text (str): Passed encrypted text
+        rng (generator): Seeded random number generator
         iters (int): Number of MCMC iterations, default 1,000,000
+    returns:
+        decrypt_key (str): Decryption cipher sampled from MCMC
     """
     # Get the character frequencies
     freqDict = utils.loadFreqDict()
@@ -24,7 +27,7 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     # Run the MCMC for the passed number of iterations
     for i in range(iters):
         # Make proposal
-        proposal = utils.proposeKey(decrypt_key)
+        proposal = utils.proposeKey(decrypt_key, rng)
         # Calculate the quality of the current decryption cipher
         curr_score = utils.score(decrypt_key, encoded_text, freqDict)
         # Calculate the quality of the proposed decryption cipher
@@ -35,7 +38,7 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
         accept_ratio = min(1, np.exp(new_score - curr_score))
 
         # Sample randomly from [0,1]
-        randnum = np.random.uniform()
+        randnum = rng.uniform()
 
         # Boolean flag denoting if we should accept the proposal
         acceptProposal = False if randnum > accept_ratio else True
