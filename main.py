@@ -1,4 +1,4 @@
-from mcmc import mcmc
+from mcmc import hamiltonian_monte_carlo, mcmc
 import utils
 import numpy as np
 
@@ -48,7 +48,11 @@ decrypt_list = list(rng.choice(chars, size=26, replace=False))
 decrypt_key = "".join(decrypt_list)
 
 # Run MCMC
-decrypt_key = mcmc(decrypt_key, encoded_text, rng)
+#decrypt_key = mcmc(decrypt_key, encoded_text, rng)
+decrypt_key = hamiltonian_monte_carlo(
+    decrypt_key, encoded_text, rng,
+    negative_log_prob, position
+)
 
 # Print decrypted text after MCMC
 decoded_text = utils.applyKey(decrypt_key, encoded_text)
