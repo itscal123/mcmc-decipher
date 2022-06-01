@@ -14,13 +14,19 @@ def generateFreqCounts(textFiles):
     returns:
         freq_dict (dict): frequency of all bigram character pairs
     """
+    # Initialize table of frequencies
     freq_dict = defaultdict(int)
+
+    # Set of English alphabet characters
     chars = set(['A','B','C','D','E','F','G','H','I','J','K','L','M',
                  'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
 
+    # Iterate through each file in textFiles
     for textfile in textFiles:
+        # Open the current textfile
         f = open(textfile)
 
+        # Iterate through each line in the txt file
         for line in f:
             # Conver to upper case
             line = str.upper(line)
@@ -44,6 +50,7 @@ def generateFreqCounts(textFiles):
                 elif (line[i] not in chars) and (line[i+1] not in chars):
                     bigram = '  '
                 
+                # Increment bigram occurrence
                 freq_dict[bigram] += 1
 
     # Pickle freq_dict
