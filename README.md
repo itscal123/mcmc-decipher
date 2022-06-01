@@ -5,7 +5,6 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 
 ## Current Goals:
     Improve score function
-    Optimize code (using numpy)
     Increase data corpus
     Use more difficult cipher (e.g., transposition or substitution-transposition)
     Use Hamiltonian Monte Carlo
