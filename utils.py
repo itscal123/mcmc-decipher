@@ -94,23 +94,20 @@ def score(key, text, freq_dict):
     # Strip the text
     stripped = decoded.strip()
 
-    # Convert the target into a list of characters
-    target = list(stripped)
-
     # Count the number of two letter pairs in the next target
-    for i in range(len(target) - 1):
-        bigram = target[i] + target[i+1]
+    for i in range(len(stripped) - 1):
+        bigram = stripped[i] + stripped[i+1]
 
         # Non-letter + letter
-        if (target[i] not in alphabet) and (target[i+1] in alphabet):
-            bigram = ' ' + target[i+1]
+        if (stripped[i] not in alphabet) and (stripped[i+1] in alphabet):
+            bigram = ' ' + stripped[i+1]
 
         # Letter + non-letter
-        elif (target[i] in alphabet) and (target[i+1] not in alphabet):
-            bigram = target[i+1] + ' '
+        elif (stripped[i] in alphabet) and (stripped[i+1] not in alphabet):
+            bigram = stripped[i+1] + ' '
 
         # Two non-letters
-        elif (target[i] not in alphabet) and (target[i+1] not in alphabet):
+        elif (stripped[i] not in alphabet) and (stripped[i+1] not in alphabet):
             bigram = '  '
 
         targetFreq[bigram] += 1
