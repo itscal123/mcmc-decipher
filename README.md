@@ -4,8 +4,6 @@ Use Markov Chain Monte Carlo (MCMC) sampling to generate a cipher key that best 
 Currently working with substiution cipher for the encryption and Metroplis-Hastings for MCMC. 
 
 ## Current Goals:
-    Improve score function
-    Increase data corpus
     Use more difficult cipher (e.g., transposition or substitution-transposition)
     Use Hamiltonian Monte Carlo
 
