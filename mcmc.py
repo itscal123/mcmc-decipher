@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 
-def mcmc(decrypt_key, encoded_text, rng, iters=100000):
+def mcmc(decrypt_key, encoded_text, rng, iters=50000):
     """
     Function that uses the Metroplis-Hastings algorithm for our Markov Chain 
     Monte Carlo implementation.
@@ -16,7 +16,7 @@ def mcmc(decrypt_key, encoded_text, rng, iters=100000):
         decrypt_key (str): String representation of the decryption cipher
         encoded_text (str): Passed encrypted text
         rng (generator): Seeded random number generator
-        iters (int): Number of MCMC iterations, default 1,000,000
+        iters (int): Number of MCMC iterations, default 50,000
     returns:
         decrypt_key (str): Decryption cipher sampled from MCMC
     """
