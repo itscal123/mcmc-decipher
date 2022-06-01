@@ -2,7 +2,6 @@
 File containing functions that run MCMC to find decryption cipher. 
 """
 import utils
-import math
 import numpy as np
 
 
@@ -61,7 +60,10 @@ def mcmc(decrypt_key, encoded_text, rng, iters=50000):
 def leapfrog(q, p, dVdq, path_len, step_size):
     """
     Helper function for Hamiltonian Monte Carlo that uses leapfrog integration to numerically integrate
-    differential equations
+    differential equations. To avoid the accumulation of systematic errors, update the momentum using
+    a half step, then the position at a full step. After, finish the updating p with another half step. 
+    The loop you can perform steps normally (investigate further). Finally, flip the momentum (also investigate
+    further)
     ----------
     params:
         q (np.float64): initial position
@@ -73,8 +75,22 @@ def leapfrog(q, p, dVdq, path_len, step_size):
     returns:
         q, p (np.float64, np.float64): updated position and momentum
     """
-    # TODO
+    # Create shallow copies of the values q and p
+    q = np.copy(q)
+    p = np.copy(p)
 
+    # Take step in direction of the gradient of the velocity * step_size
+    q -= step_size * dVdq(q) / 2    # half step
+
+    for _ in range(int(path_len / step_size) - 1):
+        q += step_size * p          # whole step
+        p -= step_size * dVdq(q)    # whole step
+    
+    q += step_size * p              # whole step
+    p -= step_size * dVdq(q) / 2    # half step
+
+    # Momentum flip
+    return q, -p
 """
 Useful links:
 HMC
