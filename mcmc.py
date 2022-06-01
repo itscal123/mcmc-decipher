@@ -11,6 +11,11 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     Function that uses the Metroplis-Hastings algorithm for our Markov Chain 
     Monte Carlo implementation.
 
+    ----------
+    params:
+        decrypt_key (str): String representation of the decryption cipher
+        encoded_text (str): Passed encrypted text
+        iters (int): Number of MCMC iterations, default 1,000,000
     """
     # Get the character frequencies
     freqDict = utils.loadFreqDict()
