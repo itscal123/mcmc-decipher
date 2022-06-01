@@ -1,6 +1,5 @@
 import pickle
 import numpy as np
-import math
 from collections import defaultdict
 
 
@@ -119,7 +118,7 @@ def score(key, text, freq_dict):
     # Calculate the log likelihood score
     for key, value in targetFreq.items():
         if key in freq_dict:
-            score += value * math.log(freq_dict[key])
+            score += value * np.log(freq_dict[key])
 
     return score
 

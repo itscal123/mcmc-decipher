@@ -32,7 +32,7 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
 
         # Calculate the acceptance probability (ratio between the current
         # score and proposed score)
-        accept_ratio = min(1, math.exp(new_score - curr_score))
+        accept_ratio = min(1, np.exp(new_score - curr_score))
 
         # Sample randomly from [0,1]
         randnum = np.random.uniform()
@@ -54,6 +54,23 @@ def mcmc(decrypt_key, encoded_text, iters=100000):
     # Return the final decryption cipher
     return decrypt_key
 
+
+def leapfrog(q, p, dVdq, path_len, step_size):
+    """
+    Helper function for Hamiltonian Monte Carlo that uses leapfrog integration to numerically integrate
+    differential equations
+    ----------
+    params:
+        q (np.float64): initial position
+        p (np.float64): initial momentum
+        dVdq (callable): gradient of the velocity
+        path_len (float): how long to integrate for
+        step_size (float): how long each integration step should be
+
+    returns:
+        q, p (np.float64, np.float64): updated position and momentum
+    """
+    # TODO
 
 """
 Useful links:
