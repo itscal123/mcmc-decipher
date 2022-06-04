@@ -208,3 +208,13 @@ def testCipher(encrypt_key, base, decrypt_key):
     
     # Return the total number of correct and percentage (as a tuple)
     return guess, correct, correct/total
+
+
+# TODO: Convert decryption key to potential energy representation
+def toPosition(decrypt_key):
+    return 
+
+
+# TODO: Convert potential energy representation to decrypt key
+def toDecryptKey(potential):
+    return

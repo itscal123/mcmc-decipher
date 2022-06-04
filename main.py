@@ -1,4 +1,5 @@
 from mcmc import hamiltonian_monte_carlo, mcmc
+from distributions import log_normal_mvnormal
 import utils
 import numpy as np
 
@@ -47,12 +48,21 @@ print(f'Encrypted text:\n{encoded_text}\n')
 decrypt_list = list(rng.choice(chars, size=26, replace=False))
 decrypt_key = "".join(decrypt_list)
 
+# Convert decryption key to position representation
+position = utils.toPosition(decrypt_key)
+
 # Run MCMC
 #decrypt_key = mcmc(decrypt_key, encoded_text, rng)
+"""
 decrypt_key = hamiltonian_monte_carlo(
-    decrypt_key, encoded_text, rng,
-    negative_log_prob, position
+    n_samples=10000,
+    potential=log_normal_mvnormal,
+    position=position, 
+    path_len=1,
+    step_size=0.5,
+    encoded_text=encoded_text
 )
+"""
 
 # Print decrypted text after MCMC
 decoded_text = utils.applyKey(decrypt_key, encoded_text)
