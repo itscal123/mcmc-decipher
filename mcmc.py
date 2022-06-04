@@ -20,9 +20,13 @@ def mcmc(decrypt_key, encoded_text, rng, iters=50000):
         iters (int): Number of MCMC iterations, default 50,000
     returns:
         decrypt_key (str): Decryption cipher sampled from MCMC
+        history (list): History of the scores during the MCMC run
     """
     # Get the character frequencies
     freqDict = utils.loadFreqDict()
+
+    # Array to store the scores
+    history = []
 
     print('Running Markov Chain Monte Carlo')
     # Run the MCMC for the passed number of iterations
@@ -48,6 +52,8 @@ def mcmc(decrypt_key, encoded_text, rng, iters=50000):
         if acceptProposal:
             decrypt_key = proposal
 
+        # Record the score of the decryption cipher
+        history.append(utils.score(decrypt_key, encoded_text, freqDict))
         # Print every 500th iteration
         if (i+1) == 1 or (i+1) % 500 == 0:
             decode = utils.applyKey(decrypt_key, encoded_text)
@@ -55,8 +61,8 @@ def mcmc(decrypt_key, encoded_text, rng, iters=50000):
             print(f'Iteration {i+1:>5} -> Score: {score:.2f}\n')
             print(f'Decrypted text:\n{decode}\n')
     
-    # Return the final decryption cipher
-    return decrypt_key
+    # Return the final decryption cipher, the history of scores, and the final score
+    return decrypt_key, history, utils.score(decrypt_key, encoded_text, freqDict)
 
 # Initial position should be initial decryption cipher guess?
 def hamiltonian_monte_carlo(

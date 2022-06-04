@@ -1,3 +1,4 @@
+from tkinter import Y
 from mcmc import hamiltonian_monte_carlo, mcmc
 from distributions import log_normal_mvnormal
 import utils
@@ -44,15 +45,24 @@ encoded_text = utils.applyKey(encrypt_key, user_input)
 print(f'\nUnencrypted text: \n{user_input}\n')
 print(f'Encrypted text:\n{encoded_text}\n')
 
-# Generate a random decryption key
-decrypt_list = list(rng.choice(chars, size=26, replace=False))
-decrypt_key = "".join(decrypt_list)
+# Initialize array to store decryption ciphers and history curves
+ciphers, histories = [], []
 
-# Convert decryption key to position representation
-position = utils.toPosition(decrypt_key)
+# 10 Runs of MCMC
+for _ in range(10):
+    # Generate a random decryption key
+    decrypt_list = list(rng.choice(chars, size=26, replace=False))
+    decrypt_key = "".join(decrypt_list)
 
-# Run MCMC
-#decrypt_key = mcmc(decrypt_key, encoded_text, rng)
+    # Convert decryption key to position representation
+    position = utils.toPosition(decrypt_key)
+
+    # Run MCMC
+    decrypt_key, history, score = mcmc(decrypt_key, encoded_text, rng, 10000)
+
+    # Record the decryption cipher and history
+    ciphers.append((decrypt_key, score))
+    histories.append(history)
 """
 decrypt_key = hamiltonian_monte_carlo(
     n_samples=10000,
@@ -63,8 +73,12 @@ decrypt_key = hamiltonian_monte_carlo(
     encoded_text=encoded_text
 )
 """
+# Output the history curve
+utils.plotHistories(histories)
 
 # Print decrypted text after MCMC
+ciphers.sort(key=lambda x: x[1], reverse=True)
+decrypt_key = ciphers[0][0]
 decoded_text = utils.applyKey(decrypt_key, encoded_text)
 print('----------------------')
 print(f'Original text:\n{user_input}\n')

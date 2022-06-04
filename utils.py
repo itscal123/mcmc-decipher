@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 from collections import defaultdict
 
 
@@ -218,3 +219,31 @@ def toPosition(decrypt_key):
 # TODO: Convert potential energy representation to decrypt key
 def toDecryptKey(potential):
     return
+
+
+# Function that visualizes history curve
+def plotHistories(histories):
+    """
+    Helper function that reads through some collection of histories (i.e., runs of different MCMC) and plots them 
+    along iteration time. Function saves the plot in the plots folder
+    params:
+        histories (iterable): An iterable of history arrays that record the MCMC run's score at each iteration
+    returns:
+        None
+    """
+    plt.rcParams["figure.figsize"] = (10,6)
+    # Find number of iterations
+    iters = [i for i in range(1, len(histories[0])+1)]
+
+    # Plot lines
+    for idx, history in enumerate(histories):
+        print(iters)
+        print(history)
+        plt.plot(iters, history, label=f'Run {idx+1}')
+    
+    # Set figure parameters
+    plt.legend()
+    plt.xlabel('Iterations')
+    plt.ylabel('Score')
+    plt.title('Score across MCMC runs')
+    plt.savefig('plots/plot.png')
