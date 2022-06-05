@@ -11,6 +11,11 @@ rng = np.random.default_rng(0)
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # Dummy text
+dummy_less = """
+    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some 
+    form, by injected humour, or randomised words which don't look even slightly believable.
+"""
+
 dummy = """
     There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some 
     form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a 
@@ -33,7 +38,14 @@ prompt = input('Would you like to use predefined text? [Y/N]\n')
 
 # Use dummy text if user presses Y or y, otherwise use user input
 if prompt == 'Y' or prompt == 'y':
-    user_input = dummy
+    # Boolean flag indicating whether we used the full or reduced version
+    full = True
+    prompt = input('Would you like to use the full sample prompt? [Y/N]\n')
+    if prompt == 'Y' or prompt == 'y':
+        user_input = dummy
+    else:
+        user_input = dummy_less
+        full = False
 # Prompt user for some text to be encrypted
 else:
     user_input = input("Type text you wish to be encrypted:\n")
@@ -63,21 +75,16 @@ for _ in range(10):
     # Record the decryption cipher and history
     ciphers.append((decrypt_key, score))
     histories.append(history)
-"""
-decrypt_key = hamiltonian_monte_carlo(
-    n_samples=10000,
-    potential=log_normal_mvnormal,
-    position=position, 
-    path_len=1,
-    step_size=0.5,
-    encoded_text=encoded_text
-)
-"""
+
 # Output the history curve
-utils.plotHistories(histories)
+if full:
+    filepath = 'plots/plot_full.png'
+else:
+    filepath = 'plots/plot_reduce.png'
+utils.plotHistories(histories, full)
 
 # Print decrypted text after MCMC
-ciphers.sort(key=lambda x: x[1], reverse=True)
+ciphers.sort(key=lambda x: x[1])
 decrypt_key = ciphers[0][0]
 decoded_text = utils.applyKey(decrypt_key, encoded_text)
 print('----------------------')
@@ -92,3 +99,6 @@ print(f'Correct alphabet:\n{alphabet}\n')
 print(f'Decrypted alphabet:\n{guess}\n')
 print(f'Number of correctly decoded letters:\n{count}\n')
 print(f'Percentage of correctly decoded letters:\n{percent * 100:.2f}%\n')
+
+# Generate summary statistics
+utils.summary(encrypt_key, alphabet, ciphers)

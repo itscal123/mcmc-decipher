@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from statistics import mean, median, stdev
 from collections import defaultdict
 
 
@@ -116,7 +117,7 @@ def score(key, text, freq_dict):
     # Calculate the log likelihood score
     for key, value in targetFreq.items():
         if key in freq_dict:
-            score += value * np.log(freq_dict[key])
+            score += np.log(value) + np.log(freq_dict[key])
 
     return score
 
@@ -221,6 +222,34 @@ def toDecryptKey(potential):
     return
 
 
+def summary(encrypt_key, base, ciphers):
+    """
+    Helper function that generates and prints some summary statistics based on the MCMC runs. Summary stats calculated 
+    include:
+        - Mean
+        - Standard deviation
+        - Median
+        - Min
+        - Max
+    -----------
+    params:
+        histories (iterable): An iterable of MCMC scores corresponding to each run of the MCMC function.
+    returns:
+        None
+    """
+    # Generate normalized accuracy for each cipher
+    data = [100 * (testCipher(encrypt_key, base, decrypt_key))[2] for decrypt_key, _ in ciphers]
+
+    # Output summary stats
+    print('Summary Stats')
+    print('----------------')
+    print(f'Mean: {mean(data):.2f}')
+    print(f'Std Dev: {stdev(data):.2f}')
+    print(f'Median: {median(data):.2f}')
+    print(f'Max: {data[0]:.2f}')
+    print(f'Min: {data[-1]:.2f}')
+
+
 # Function that visualizes history curve
 def plotHistories(histories):
     """
@@ -232,13 +261,13 @@ def plotHistories(histories):
         None
     """
     plt.rcParams["figure.figsize"] = (10,6)
+    plt.gcf().set_dpi(400)
+
     # Find number of iterations
     iters = [i for i in range(1, len(histories[0])+1)]
 
     # Plot lines
     for idx, history in enumerate(histories):
-        print(iters)
-        print(history)
         plt.plot(iters, history, label=f'Run {idx+1}')
     
     # Set figure parameters
