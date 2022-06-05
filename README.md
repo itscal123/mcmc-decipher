@@ -12,6 +12,7 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
     
 ## Installation
 Install neccessary packages using the command 
+    
     $pip install -r requirements.txt
 
 ## Running the program
