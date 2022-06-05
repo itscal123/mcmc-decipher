@@ -13,7 +13,7 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 ## Installation
 Install neccessary packages using the command 
     
-    $pip install -r requirements.txt
+    $ pip install -r requirements.txt
 
 ## Running the program
 After succesfully installing the project and all relevant packages, simply run main.py.
