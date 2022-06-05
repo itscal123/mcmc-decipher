@@ -1,6 +1,4 @@
-from tkinter import Y
-from mcmc import hamiltonian_monte_carlo, mcmc
-from distributions import log_normal_mvnormal
+from mcmc import mcmc
 import utils
 import numpy as np
 
@@ -46,6 +44,7 @@ if prompt == 'Y' or prompt == 'y':
     else:
         user_input = dummy_less
         full = False
+        
 # Prompt user for some text to be encrypted
 else:
     user_input = input("Type text you wish to be encrypted:\n")
@@ -81,7 +80,7 @@ if full:
     filepath = 'plots/plot_full.png'
 else:
     filepath = 'plots/plot_reduce.png'
-utils.plotHistories(histories, full)
+utils.plotHistories(histories, filepath)
 
 # Print decrypted text after MCMC
 ciphers.sort(key=lambda x: x[1])
@@ -96,6 +95,7 @@ guess, count, percent = utils.testCipher(encrypt_key, alphabet, decrypt_key)
 
 # Print the true alphabet, decrypted alphabet, and correct decryptions
 print(f'Correct alphabet:\n{alphabet}\n')
+print(f'Encryption Key {encrypt_key}\n')
 print(f'Decrypted alphabet:\n{guess}\n')
 print(f'Number of correctly decoded letters:\n{count}\n')
 print(f'Percentage of correctly decoded letters:\n{percent * 100:.2f}%\n')

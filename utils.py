@@ -246,15 +246,15 @@ def summary(encrypt_key, base, ciphers):
     print(f'Mean: {mean(data):.2f}')
     print(f'Std Dev: {stdev(data):.2f}')
     print(f'Median: {median(data):.2f}')
-    print(f'Max: {data[0]:.2f}')
-    print(f'Min: {data[-1]:.2f}')
+    print(f'Max: {max(data):.2f}')
+    print(f'Min: {min(data):.2f}')
 
 
 # Function that visualizes history curve
-def plotHistories(histories):
+def plotHistories(histories, filepath):
     """
     Helper function that reads through some collection of histories (i.e., runs of different MCMC) and plots them 
-    along iteration time. Function saves the plot in the plots folder
+    along the number of samples drawn. Function saves the plot in the plots folder
     params:
         histories (iterable): An iterable of history arrays that record the MCMC run's score at each iteration
     returns:
@@ -263,16 +263,17 @@ def plotHistories(histories):
     plt.rcParams["figure.figsize"] = (10,6)
     plt.gcf().set_dpi(400)
 
-    # Find number of iterations
-    iters = [i for i in range(1, len(histories[0])+1)]
+    # Find number of samples
+    samples = [i for i in range(1, len(histories[0])+1)]
 
     # Plot lines
     for idx, history in enumerate(histories):
-        plt.plot(iters, history, label=f'Run {idx+1}')
+        plt.plot(samples, history, label=f'Run {idx+1}')
     
     # Set figure parameters
     plt.legend()
-    plt.xlabel('Iterations')
+    plt.xlabel('Sample Size m')
     plt.ylabel('Score')
-    plt.title('Score across MCMC runs')
-    plt.savefig('plots/plot.png')
+    plt.xscale('log')
+    plt.title('Scores Across MCMC Runs')
+    plt.savefig(filepath)
