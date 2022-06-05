@@ -10,7 +10,7 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 ## Cherry on top:
     Create a front end
     
-## Installation
+## Installation/Extensions
 Install neccessary packages using the command 
     
     $ pip install -r requirements.txt
