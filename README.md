@@ -5,7 +5,7 @@ Currently working with substiution cipher for the encryption and Metroplis-Hasti
 
 ## Future Goals:
     Use more difficult cipher (e.g., transposition or substitution-transposition)
-    Use Hamiltonian Monte Carlo
+    Implement Hamiltonian Monte Carlo
 
 ## Cherry on top:
     Create a front end
